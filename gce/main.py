@@ -27,7 +27,7 @@ app = Flask(__name__)
 _API_KEY = 'AIzaSyDeNOS2U4DxwnhVJvvk6Yd_oV0W19T5unQ'
 _XPATH_FOR_META_DESCRIPTION = '//meta[@name="description"]/@content'
 _XAPTH_FOR_TITLE = '//title/text()'
-_CLOUD_SENTIMENT_API = f'https://language.googleapis.com/v1/documents:analyzeSentiment?key={_API_KEY}'
+_CLOUD_SENTIMENT_API = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + _API_KEY
 _POSITIVE_SENTIMENT = 'positive'
 _NEGATIVE_SENTIMENT = 'negative'
 _NEUTRAL_SENTIMENT = 'neutral'
@@ -45,7 +45,7 @@ def _get_meta_description(dom):
   if content_array and len(content_array) > 0:
     return content_array[0]
   if not content:
-    return None
+    return ''
 
 
 def _get_title(dom):
@@ -53,13 +53,13 @@ def _get_title(dom):
   if content_array and len(content_array) > 0:
     return content_array[0]
   if not content:
-    return None
+    return ''
 
 
 def _get_title_and_desc(dom):
   title = _get_title(dom)
   description = _get_meta_description(dom)
-  return f'{title}.{description}'
+  return title + description
     
 
 def analyze_sentiment(dom):
