@@ -148,7 +148,7 @@ def sentiment(request):
     response = redis_client.get(key)
     print('meetha_Got data from redis')
     if response:
-        return json.dumps(json.loads(response))
+        return json.dumps(json.loads(response.decode("utf-8")))
 
     print('meetha_Getting data from webpage')
     dom = _get_dom(url)
