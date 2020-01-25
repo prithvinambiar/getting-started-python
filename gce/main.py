@@ -108,8 +108,8 @@ def get_redis_client():
     global _redis_client
     if _redis_client:
         return _redis_client
-    sentinel = Sentinel([('10.8.0.4', 26379), ('10.8.0.5',26379), ('10.8.0.6',26379)], socket_timeout=0.1)
-    _redis_client = sentinel.master_for('master', socket_timeout=0.1)
+    sentinel = Sentinel([('10.8.0.4', 26379), ('10.8.0.5',26379), ('10.8.0.6',26379)])
+    _redis_client = sentinel.master_for('master')
     return _redis_client
 
 
