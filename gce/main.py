@@ -80,7 +80,7 @@ def analyze_sentiment(dom):
   }
   try:
     response = requests.post(_CLOUD_SENTIMENT_API, json=request)
-    parsed_response = json.loads(response.content)
+    parsed_response = json.loads(response.content.decode('utf-8'))
     sentiment_score = parsed_response['documentSentiment']['score']
     sentiment = None
     if sentiment_score < -0.25:
