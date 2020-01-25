@@ -15,8 +15,8 @@
 set -ex
 
 # [START getting_started_gce_create_instance]
-MY_INSTANCE_NAME="my-app-instance"
-ZONE=us-central1-a
+MY_INSTANCE_NAME="my-app-instance-4"
+ZONE=asia-southeast1-a
 
 gcloud compute instances create $MY_INSTANCE_NAME \
     --image-family=debian-9 \
