@@ -148,7 +148,7 @@ def sentiment(request):
     response = redis_client.get(key)
     print('meetha_Got data from redis')
     if response:
-        return (json.dumps(json.loads(response)), 200, headers)
+        return json.dumps(json.loads(response))
 
     print('meetha_Getting data from webpage')
     dom = _get_dom(url)
@@ -164,7 +164,7 @@ def sentiment(request):
     print('meetha_Setting redis')
     redis_client.set(key, response)
     print('meetha_Set redis done')
-    return (response, 200, headers)
+    return response
 
 
 @app.route('/sentiment-analysis')
