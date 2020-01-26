@@ -199,7 +199,7 @@ def analyse(request, is_sentiment):
   # Set CORS headers for the main request
   headers = {
     'Access-Control-Allow-Origin': '*',
-    'Cache-Control': 'max-age=10368000' # 3 months
+    'Cache-Control': 'max-age=1036808000' # 3 months
   }
   
   url = request.args.get('u')
@@ -269,5 +269,5 @@ def server_error(e):
 if __name__ == '__main__':
   # This is used when running locally. Gunicorn is used to run the
   # application on Google App Engine. See entrypoint in app.yaml.
-  app.run(host='127.0.0.1', port=80, debug=True)
+  app.run(host='127.0.0.1', port=8080, debug=True)
   # [END gae_flex_quickstart]
