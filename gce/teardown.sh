@@ -22,4 +22,4 @@ ZONE=asia-southeast1-a
 gcloud compute instances delete $MY_INSTANCE_NAME \
     --zone=$ZONE --delete-disks=all
 
-gcloud compute firewall-rules delete default4-allow-http-8080
+gcloud compute firewall-rules delete default4-allow-http-80
