@@ -199,7 +199,7 @@ def analyse(request, is_sentiment):
   # Set CORS headers for the main request
   headers = {
     'Access-Control-Allow-Origin': '*',
-    'Cache-Control': 'public, max-age=1036808000' # 3 months
+    'Cache-Control': 'public, max-age=0, s-maxage=1036808000' # 3 months for CDN, 0 for browsers.
   }
   
   url = request.args.get('u')
