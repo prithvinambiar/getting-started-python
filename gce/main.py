@@ -33,7 +33,7 @@ _NEGATIVE_SENTIMENT = 'negative'
 _NEUTRAL_SENTIMENT = 'neutral'
 _REDIS_SENTIMENT_KEY_PREFIX = 's_'
 _REDIS_CATEGORY_KEY_PREFIX = 'c_'
-_CLOUD_CLASSIFY_TEXT_API = f'https://language.googleapis.com/v1/documents:classifyText?key={_API_KEY}'
+_CLOUD_CLASSIFY_TEXT_API = 'https://language.googleapis.com/v1/documents:classifyText?key=' + _API_KEY
 _DEFAULT_CATEGORY = 'Other'
 _ALLOWED_CATEGORIES = [
     '/Travel',
