@@ -36,7 +36,7 @@ git clone https://github.com/prithvinambiar/getting-started-python.git /opt/app
 apt-get --assume-yes install nginx
 
 # Copy nginx conf file
-cp /opt/gce/nginx.conf /etc/nginx/sites-available/default
+cp /opt/app/gce/nginx.conf /etc/nginx/sites-available/default
 
 # Restart nginx
 service nginx restart
