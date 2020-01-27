@@ -32,6 +32,15 @@ useradd -m -d /home/pythonapp pythonapp
 export HOME=/root
 git clone https://github.com/prithvinambiar/getting-started-python.git /opt/app
 
+# Install nginx
+apt-get --assume-yes install nginx
+
+# Copy nginx conf file
+cp /opt/gce/nginx.conf /etc/nginx/sites-available/default
+
+# Restart nginx
+service nginx restart
+
 # Python environment setup
 virtualenv -p python3 /opt/app/gce/env
 source /opt/app/gce/env/bin/activate
