@@ -21,7 +21,6 @@ import json
 import requests
 
 from lxml import html
-from redis.sentinel import Sentinel
 
 app = Flask(__name__)
 _API_KEY = 'AIzaSyDeNOS2U4DxwnhVJvvk6Yd_oV0W19T5unQ'
@@ -46,7 +45,6 @@ _ALLOWED_CATEGORIES = [
     '/Books & Literature',
     '/Sports'
 ]
-_redis_client = None
 
 
 def _get_dom(url):
@@ -164,15 +162,6 @@ def get_key(u, is_sentiment):
   return _REDIS_CATEGORY_KEY_PREFIX + u
 
 
-def get_redis_client():
-  # global _redis_client
-  # if _redis_client:
-  #   return _redis_client
-  sentinel = Sentinel([('10.148.0.6', 26379), ('10.148.0.7',26379), ('10.148.0.8',26379)])
-  _redis_client = sentinel.master_for('master')
-  return _redis_client
-
-
 def analyse(request, is_sentiment):
   """Responds to any HTTP request.
   Args:
@@ -203,11 +192,6 @@ def analyse(request, is_sentiment):
   url = request.args.get('u')
   url = url.split('?')[0]
   key = get_key(url, is_sentiment)
-  redis_client = get_redis_client()
-  response = redis_client.get(key)
-  if response:
-    return (json.dumps(json.loads(response.decode("utf-8"))), 200, headers)
-
   dom = _get_dom(url)
   response = None
   if is_sentiment:
@@ -224,7 +208,6 @@ def analyse(request, is_sentiment):
     }
     
   response = json.dumps(response)
-  redis_client.set(key, response)
   return (response, 200, headers)
 
 
