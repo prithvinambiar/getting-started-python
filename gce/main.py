@@ -58,16 +58,14 @@ def _get_meta_description(dom):
   content_array = dom.xpath(_XPATH_FOR_META_DESCRIPTION)
   if content_array and len(content_array) > 0:
     return content_array[0]
-  if not content:
-    return ''
+  return ''
 
 
 def _get_title(dom):
   content_array = dom.xpath(_XAPTH_FOR_TITLE)
   if content_array and len(content_array) > 0:
     return content_array[0]
-  if not content:
-    return ''
+  return ''
 
 
 def _get_title_and_desc(dom):
