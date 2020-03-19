@@ -19,6 +19,7 @@ import os
 from flask import Flask, request
 import json
 import requests
+import bs4
 
 from lxml import html
 
@@ -45,6 +46,7 @@ _ALLOWED_CATEGORIES = [
     '/Books & Literature',
     '/Sports'
 ]
+_CLOUD_DETECT_LANG_API = 'https://translation.googleapis.com/language/translate/v2/detect?key=' + _API_KEY
 
 
 def _get_dom(url):
@@ -225,6 +227,68 @@ def category_analysis():
   """Return a friendly HTTP greeting."""
   print('meetha_Request recieved')
   response = analyse(request, False)
+  print('meetha_Request processed')
+  return response
+
+
+def _detect_lang(dom):
+  soup = bs4.BeautifulSoup(dom)
+  # kill all script and style elements.
+  for script in soup(["script", "style"]):
+    script.extract()
+  content = soup.get_text()
+  if not content:
+    return {}
+  request = {
+    'q': content
+  }
+  response = requests.post(_CLOUD_DETECT_LANG_API, json=request)
+  parsed_response = json.loads(response.content)
+  return parsed_response
+
+
+def process_detect_language(request):
+  """Responds to any HTTP request.
+  Args:
+  request (flask.Request): HTTP request object.
+  Returns:
+    The response text or any set of values that can be turned into a
+    Response object using
+    `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
+  """
+  # Set CORS headers for the preflight request
+  if request.method == 'OPTIONS':
+    # Allows GET requests from any origin with the Content-Type
+    # header and caches preflight response for an 3600s
+    headers = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Max-Age': '3600'
+    }
+    return ('', 204, headers)
+
+  # Set CORS headers for the main request
+  headers = {
+    'Access-Control-Allow-Origin': '*',
+    # 'Cache-Control': 'public, max-age=0, s-maxage=1036808000' # 3 months for CDN, 0 for browsers.
+  }
+  
+  url = request.args.get('u')
+  url = url.split('?')[0]
+  page = requests.get(url)
+  dom = page.content
+  
+  response = _detect_lang(dom)
+  response = json.dumps(response)
+  return (response, 200, headers)
+
+
+@app.route('/detect-language')
+def detect_language():
+  """Return a friendly HTTP greeting."""
+  print('meetha_Request recieved')
+  response = process_detect_language(request)
   print('meetha_Request processed')
   return response
 
