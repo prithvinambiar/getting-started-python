@@ -243,7 +243,7 @@ def _detect_lang(dom):
     'q': content
   }
   response = requests.post(_CLOUD_DETECT_LANG_API, json=request)
-  parsed_response = json.loads(response.content)
+  parsed_response = json.loads(response.content.decode('utf-8'))
   return parsed_response
 
 
