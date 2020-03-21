@@ -271,7 +271,7 @@ def process_detect_language(request):
   # Set CORS headers for the main request
   headers = {
     'Access-Control-Allow-Origin': '*',
-    # 'Cache-Control': 'public, max-age=0, s-maxage=1036808000' # 3 months for CDN, 0 for browsers.
+    'Cache-Control': 'public, max-age=0, s-maxage=1036808000' # 3 months for CDN, 0 for browsers.
   }
   
   url = request.args.get('u')
